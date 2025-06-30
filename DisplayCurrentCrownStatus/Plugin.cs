@@ -5,7 +5,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using BepInEx.Configuration;
-using ModTemplate.Patches;
+using DisplayCurrentCrownStatus.Patches;
 using System.IO;
 
 #if IL2CPP
@@ -13,7 +13,7 @@ using BepInEx.Unity.IL2CPP.Utils;
 using BepInEx.Unity.IL2CPP;
 #endif
 
-namespace ModTemplate
+namespace DisplayCurrentCrownStatus
 {
     [BepInPlugin(MyPluginInfo.PLUGIN_GUID, ModName, MyPluginInfo.PLUGIN_VERSION)]
 #if MONO
@@ -22,7 +22,7 @@ namespace ModTemplate
     public class Plugin : BasePlugin
 #endif
     {
-        public const string ModName = "ModTemplate";
+        public const string ModName = "DisplayCurrentCrownStatus";
 
         public static Plugin Instance;
         private Harmony _harmony;
@@ -75,7 +75,7 @@ namespace ModTemplate
             {
                 bool result = true;
                 // If any PatchFile fails, result will become false
-                //result &= Instance.PatchFile(typeof(ExampleSingleHitBigNotesPatch));
+                result &= Instance.PatchFile(typeof(DisplayCurrentCrownStatusPatch));
                 //result &= Instance.PatchFile(typeof(ExampleSortByUraPatch));
                 if (result)
                 {

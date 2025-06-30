@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AuthorName>InsertNameHere</AuthorName>
-    <ModName>ModTemplate</ModName>
+    <AuthorName>DB</AuthorName>
+    <ModName>DisplayCurrentCrownStatus</ModName>
     <ModVersion>0.0.1</ModVersion>
-    <Description>A generic template for mod creation on TDMX.</Description>
+    <Description>A TDMX mod to show the crown status of your current play.</Description>
   </PropertyGroup>
 
   <Target Name="UserFile" AfterTargets="PreBuildEvent">
@@ -80,7 +80,6 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains('TDMX'))">
-    <Reference Include="$(CustomGameModesPath)" Private="false" />
   </ItemGroup>
 
 
