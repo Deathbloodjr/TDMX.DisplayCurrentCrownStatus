@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AuthorName>DB</AuthorName>
     <ModName>DisplayCurrentCrownStatus</ModName>
-    <ModVersion>0.0.1</ModVersion>
+    <ModVersion>1.0.0</ModVersion>
     <Description>A TDMX mod to show the crown status of your current play.</Description>
   </PropertyGroup>
 
