@@ -76,7 +76,6 @@ namespace DisplayCurrentCrownStatus
                 bool result = true;
                 // If any PatchFile fails, result will become false
                 result &= Instance.PatchFile(typeof(DisplayCurrentCrownStatusPatch));
-                //result &= Instance.PatchFile(typeof(ExampleSortByUraPatch));
                 if (result)
                 {
                     ModLogger.Log($"Plugin {MyPluginInfo.PLUGIN_NAME} is loaded!");
