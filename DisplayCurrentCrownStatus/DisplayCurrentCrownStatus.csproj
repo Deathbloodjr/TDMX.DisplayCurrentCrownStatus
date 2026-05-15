@@ -80,6 +80,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains('TDMX'))">
+    <Reference Include="$(SaveProfileManagerPath)" Private="false" />
   </ItemGroup>
 
 

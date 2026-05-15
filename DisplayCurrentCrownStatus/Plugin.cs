@@ -7,6 +7,8 @@ using UnityEngine;
 using BepInEx.Configuration;
 using DisplayCurrentCrownStatus.Patches;
 using System.IO;
+using SaveProfileManager.Patches;
+using System.Reflection;
 
 #if IL2CPP
 using BepInEx.Unity.IL2CPP.Utils;
@@ -46,6 +48,12 @@ namespace DisplayCurrentCrownStatus
 
             SetupConfig(Config, Path.Combine("BepInEx", "data", ModName));
             SetupHarmony();
+
+            var isSaveManagerLoaded = IsSaveManagerLoaded();
+            if (isSaveManagerLoaded)
+            {
+                AddToSaveManager();
+            }
         }
 
         private void SetupConfig(ConfigFile config, string saveFolder, bool isSaveManager = false)
@@ -129,6 +137,38 @@ namespace DisplayCurrentCrownStatus
             // If there's nothing to reload, don't put anything here, and keep it commented in AddToSaveManager
             //SwapSongLanguagesPatch.InitializeOverrideLanguages();
             //TaikoSingletonMonoBehaviour<CommonObjects>.Instance.MyDataManager.MusicData.Reload();
+        }
+
+        public void AddToSaveManager()
+        {
+            // Add SaveDataManager dll path to your csproj.user file
+            // https://github.com/Deathbloodjr/TDMX.SaveProfileManager
+            var plugin = new PluginSaveDataInterface(MyPluginInfo.PLUGIN_GUID);
+            plugin.AssignLoadFunction(LoadPlugin);
+            plugin.AssignUnloadFunction(UnloadPlugin);
+
+            // Reloading will always be completely different per mod
+            // You'll want to reload any config file or save data that may be specific per profile
+            // If there's nothing to reload, don't put anything here, and keep it commented in AddToSaveManager
+            //plugin.AssignReloadSaveFunction(ReloadPlugin);
+
+            // Comment this if the only config option is ConfigEnabled
+            //plugin.AssignConfigSetupFunction(SetupConfig);
+
+            plugin.AddToManager(ConfigEnabled.Value);
+        }
+
+        private bool IsSaveManagerLoaded()
+        {
+            try
+            {
+                Assembly loadedAssembly = Assembly.Load("com.DB.TDMX.SaveProfileManager");
+                return loadedAssembly != null;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public static MonoBehaviour GetMonoBehaviour() => TaikoSingletonMonoBehaviour<CommonObjects>.Instance;
